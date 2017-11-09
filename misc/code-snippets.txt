@@ -1,0 +1,13 @@
+==== DataStreamerExample: =====
+
+Slow preloading with put operations:
+
+            for (int i = 0; i < ENTRY_COUNT; i++) {
+                cache.put(i, Integer.toString(i));
+
+                // Print out progress while loading cache.
+                if (i > 0 && i % 10000 == 0)
+                    System.out.println("Loaded " + i + " keys.");
+            }
+
+
