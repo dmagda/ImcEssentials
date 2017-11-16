@@ -58,7 +58,7 @@ public class PutGetExample {
             System.out.println(">>> Cache put-get example started.");
 
             // Individual puts and gets.
-            //putData(cache);
+            putData(cache);
 
             // Bulk puts and gets.
             getData(cache);
