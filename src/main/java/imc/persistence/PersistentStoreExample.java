@@ -31,7 +31,7 @@ import org.apache.ignite.configuration.CacheConfiguration;
 /**
  * This example demonstrates the usage of Apache Ignite Persistent Store.
  * <p>
- * To execute this example you should start an instance of {@link PersistentStoreExampleNodeStartup}
+ * To execute this example you should start an instance of {@link PersistentStoreExample}
  * class which will start up an Apache Ignite remote server node with a proper configuration.
  * <p>
  * When {@code UPDATE} parameter of this example is set to {@code true}, the example will populate
@@ -78,7 +78,7 @@ public class PersistentStoreExample {
                 try (IgniteDataStreamer<Long, Organization> streamer = ignite.dataStreamer(ORG_CACHE)) {
                     streamer.allowOverwrite(true);
 
-                    for (long i = 0; i < 100_000; i++) {
+                    for (long i = 0; i < 60_000; i++) {
                         streamer.addData(i, new Organization(i, "organization-" + i));
 
                         if (i > 0 && i % 10_000 == 0)
