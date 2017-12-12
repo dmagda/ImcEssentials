@@ -19,11 +19,15 @@ package imc.compute;
 
 
 import org.apache.ignite.Ignite;
+import org.apache.ignite.IgniteCache;
 import org.apache.ignite.IgniteException;
 import org.apache.ignite.Ignition;
+import org.apache.ignite.binary.BinaryObject;
+import org.apache.ignite.lang.IgniteRunnable;
+import org.apache.ignite.resources.IgniteInstanceResource;
 
 /**
- * Created by dmagda on 12/12/17.
+ *
  */
 public class CollocatedProcessingExample {
     /**
@@ -40,13 +44,46 @@ public class CollocatedProcessingExample {
             System.out.println();
             System.out.println(">>> Collocated processing example started.");
 
-            // Assigning the affinity key to Canada country code.
+            // Assigning the affinity key to Canada country code (primary key).
             String affinityKey = "CAN";
+            runCollocatedComputation(ignite, affinityKey);
 
-            String affinityKey = "CAN";
-
-            // Gather system info from all nodes.
-            gatherSystemInfo(ignite);
+            // Assigning the affinity key to India country code (primary key).
+            affinityKey = "IND";
+            runCollocatedComputation(ignite, affinityKey);
         }
+    }
+
+    private static void runCollocatedComputation(Ignite ignite, String affinityKey) {
+        // Sending the logic to a cluster node that stores the affinity key.
+        ignite.compute().affinityRun("Country", affinityKey, new IgniteRunnable() {
+
+            @IgniteInstanceResource
+            Ignite ignite;
+
+            @Override
+            public void run() {
+                System.out.println(">>>");
+
+                // Getting an access to Countries.
+                IgniteCache<String, BinaryObject> countries = ignite.cache("Country").withKeepBinary();
+
+                System.out.println("Country: " + countries.get(affinityKey));
+
+                /*
+                IgniteCache<BinaryObject, BinaryObject> cities = ignite.cache("City").withKeepBinary();
+
+                SqlFieldsQuery query = new SqlFieldsQuery("SELECT count(*) FROM City WHERE countryCode=?").
+                    setArgs(affinityKey);
+
+                //Safe since we use "affinityRun" method!
+                query.setLocal(true);
+
+                System.out.println("Number of cities: " + cities.query(query).getAll().get(0));
+                */
+
+                System.out.println("");
+            }
+            });
     }
 }
