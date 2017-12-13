@@ -18,11 +18,13 @@ package imc.compute;
  */
 
 
+import java.util.Arrays;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.IgniteException;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.binary.BinaryObject;
+import org.apache.ignite.cache.query.SqlFieldsQuery;
 import org.apache.ignite.lang.IgniteRunnable;
 import org.apache.ignite.resources.IgniteInstanceResource;
 
@@ -56,7 +58,9 @@ public class CollocatedProcessingExample {
 
     private static void runCollocatedComputation(Ignite ignite, String affinityKey) {
         // Sending the logic to a cluster node that stores the affinity key.
-        ignite.compute().affinityRun("Country", affinityKey, new IgniteRunnable() {
+
+        ignite.compute().affinityRun(Arrays.asList("Country", "City"), affinityKey,
+            new IgniteRunnable() {
 
             @IgniteInstanceResource
             Ignite ignite;
@@ -70,7 +74,6 @@ public class CollocatedProcessingExample {
 
                 System.out.println("Country: " + countries.get(affinityKey));
 
-                /*
                 IgniteCache<BinaryObject, BinaryObject> cities = ignite.cache("City").withKeepBinary();
 
                 SqlFieldsQuery query = new SqlFieldsQuery("SELECT count(*) FROM City WHERE countryCode=?").
@@ -80,7 +83,6 @@ public class CollocatedProcessingExample {
                 query.setLocal(true);
 
                 System.out.println("Number of cities: " + cities.query(query).getAll().get(0));
-                */
 
                 System.out.println("");
             }
