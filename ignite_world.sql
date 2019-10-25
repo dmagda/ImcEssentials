@@ -21,7 +21,7 @@ CREATE TABLE Country (
   Capital INT(11),
   Code2 CHAR(2),
   PRIMARY KEY (Code)
-) WITH "template=partitioned, backups=1, CACHE_NAME=Country, VALUE_TYPE=imc.model.Country";
+) WITH "template=partitioned, CACHE_NAME=Country, VALUE_TYPE=imc.model.Country";
 
 DROP TABLE IF EXISTS City;
 
@@ -32,7 +32,7 @@ CREATE TABLE City (
   District CHAR(20),
   Population INT(11),
   PRIMARY KEY (ID, CountryCode)
-) WITH "template=partitioned, backups=1, affinityKey=CountryCode, CACHE_NAME=City, KEY_TYPE=imc.model.CityKey, VALUE_TYPE=imc.model.City";
+) WITH "template=partitioned, affinityKey=CountryCode, CACHE_NAME=City, KEY_TYPE=imc.model.CityKey, VALUE_TYPE=imc.model.City";
 
 CREATE INDEX idx_country_code ON city (CountryCode);
 

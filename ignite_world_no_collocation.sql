@@ -21,7 +21,7 @@ CREATE TABLE Country (
   Capital INT(11),
   Code2 CHAR(2),
   PRIMARY KEY (Code)
-) WITH "template=partitioned, backups=1, CACHE_NAME=Country";
+) WITH "template=partitioned, CACHE_NAME=Country";
 
 DROP TABLE IF EXISTS City;
 
@@ -32,7 +32,7 @@ CREATE TABLE City (
   District CHAR(20),
   Population INT(11),
   PRIMARY KEY (ID, CountryCode)
-) WITH "template=partitioned, backups=1, CACHE_NAME=City";
+) WITH "template=partitioned, CACHE_NAME=City";
 
 CREATE INDEX idx_country_code ON city (CountryCode);
 
