@@ -1,5 +1,3 @@
-package imc.compute;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +15,7 @@ package imc.compute;
  * limitations under the License.
  */
 
+package imc.compute;
 
 import java.util.Arrays;
 import org.apache.ignite.Ignite;
