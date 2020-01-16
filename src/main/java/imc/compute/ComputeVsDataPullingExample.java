@@ -62,7 +62,7 @@ public class ComputeVsDataPullingExample {
     /**
      * Adjust to control a number of the records to be loaded.
      */
-    private static int RECORDS_CNT = 100_000;
+    private static int RECORDS_CNT = 200_000;
 
     /**
      * Connection to the server nodes cluster.
