@@ -44,7 +44,7 @@ CREATE TABLE CountryLanguage (
   IsOfficial CHAR(2),
   Percentage DECIMAL(4,1),
   PRIMARY KEY (CountryCode,Language)
-) WITH "template=partitioned, backups=1, CACHE_NAME=CountryLng";
+) WITH "template=partitioned, CACHE_NAME=CountryLng";
 
 CREATE INDEX idx_lang_country_code ON countrylanguage (CountryCode);
 

@@ -44,7 +44,7 @@ CREATE TABLE CountryLanguage (
   IsOfficial CHAR(2),
   Percentage DECIMAL(4,1),
   PRIMARY KEY (CountryCode,Language)
-) WITH "template=partitioned, backups=1, affinityKey=CountryCode, CACHE_NAME=CountryLng, KEY_TYPE=imc.model.CountryLngKey, VALUE_TYPE=imc.model.CountryLng";
+) WITH "template=partitioned, affinityKey=CountryCode, CACHE_NAME=CountryLng, KEY_TYPE=imc.model.CountryLngKey, VALUE_TYPE=imc.model.CountryLng";
 
 CREATE INDEX idx_lang_country_code ON countrylanguage (CountryCode);
 
