@@ -31,7 +31,7 @@ CREATE TABLE City (
   CountryCode CHAR(3),
   District CHAR(20),
   Population INT(11),
-  PRIMARY KEY (ID, CountryCode)
+  PRIMARY KEY (ID)
 ) WITH "template=partitioned, CACHE_NAME=City";
 
 CREATE INDEX idx_country_code ON city (CountryCode);
@@ -43,7 +43,7 @@ CREATE TABLE CountryLanguage (
   Language CHAR(30),
   IsOfficial CHAR(2),
   Percentage DECIMAL(4,1),
-  PRIMARY KEY (CountryCode,Language)
+  PRIMARY KEY (CountryCode, Language)
 ) WITH "template=partitioned, CACHE_NAME=CountryLng";
 
 CREATE INDEX idx_lang_country_code ON countrylanguage (CountryCode);
